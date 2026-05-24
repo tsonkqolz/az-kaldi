@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geri Sayım | 28 Haziran</title>
+    <!-- Import Space Grotesk for geometric numbers and Open Sans for highly readable labels -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container">
+        <!-- Minimalist Countdown Display with Turkish labels -->
+        <div class="timer" id="timer">
+            <div class="time-block">
+                <span class="unit" id="days">00</span>
+                <span class="label">gün</span>
+            </div>
+            <span class="separator">:</span>
+            <div class="time-block">
+                <span class="unit" id="hours">00</span>
+                <span class="label">saat</span>
+            </div>
+            <span class="separator">:</span>
+            <div class="time-block">
+                <span class="unit" id="minutes">00</span>
+                <span class="label">dakika</span>
+            </div>
+            <span class="separator">:</span>
+            <div class="time-block">
+                <span class="unit" id="seconds">00</span>
+                <span class="label">saniye</span>
+            </div>
+        </div>
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>
