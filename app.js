@@ -160,7 +160,7 @@ function startSwapInterval() {
     if (swapIntervalId) {
         clearInterval(swapIntervalId);
     }
-    swapIntervalId = setInterval(toggleView, 10000);
+    swapIntervalId = setInterval(toggleView, 15000);
 }
 
 // Start swapping automatically initially
@@ -172,10 +172,88 @@ document.addEventListener('click', () => {
         closeSettings();
         return;
     }
-    
+
     // Perform manual toggle
     toggleView();
     // Reset the 10-second automatic timer
     startSwapInterval();
+});
+
+// Multi-language translation cycling for simple label
+const languages = [
+    { first: 'gün', second: 'kaldı' },
+    { first: 'days', second: 'left' },
+    { first: 'días', second: 'quedan' },
+    { first: 'hari', second: 'lagi' },
+    { first: 'siku', second: 'zimebaki' },
+    { first: 'أيام', second: 'متبقية' }
+];
+let currentLangIndex = 0;
+
+const simpleLabel = document.getElementById('simple-label');
+const simpleLabelFirst = document.getElementById('simple-label-first');
+const simpleLabelSecond = document.getElementById('simple-label-second');
+
+function rotateLanguage() {
+    if (!simpleLabel || !simpleLabelFirst || !simpleLabelSecond) return;
+
+    // Fade out simple label
+    simpleLabel.classList.add('fade-out');
+
+    // Wait for the opacity transition to finish, then change text and fade back in
+    setTimeout(() => {
+        currentLangIndex = (currentLangIndex + 1) % languages.length;
+        const nextLang = languages[currentLangIndex];
+        simpleLabelFirst.textContent = nextLang.first;
+        simpleLabelSecond.textContent = nextLang.second;
+
+        simpleLabel.classList.remove('fade-out');
+    }, 300); // 300ms matches style.css transition speed
+}
+
+// Rotate language every 2.5 seconds (so all 6 languages are shown in the 15s window)
+setInterval(rotateLanguage, 2500);
+
+// Fullscreen Toggle Controls
+const fullscreenToggle = document.getElementById('fullscreen-toggle');
+
+function toggleFullscreen(e) {
+    if (e) e.stopPropagation(); // Prevents document click toggleView from triggering
+    
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch((err) => {
+            console.error(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+    } else {
+        document.exitFullscreen();
+    }
+}
+
+if (fullscreenToggle) {
+    fullscreenToggle.addEventListener('click', toggleFullscreen);
+}
+
+// Dynamically toggle maximize/minimize icons on fullscreen state change
+document.addEventListener('fullscreenchange', () => {
+    if (!fullscreenToggle) return;
+    if (document.fullscreenElement) {
+        fullscreenToggle.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minimize">
+                <path d="M8 3v3a2 2 0 0 1-2 2H3"/>
+                <path d="M21 8h-3a2 2 0 0 1-2-2V3"/>
+                <path d="M3 16h3a2 2 0 0 1 2 2v3"/>
+                <path d="M16 21v-3a2 2 0 0 1 2-2h3"/>
+            </svg>
+        `;
+    } else {
+        fullscreenToggle.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-maximize">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3"/>
+                <path d="M21 8V5a2 2 0 0 0-2-2h-3"/>
+                <path d="M3 16v3a2 2 0 0 0 2 2h3"/>
+                <path d="M16 21h3a2 2 0 0 0 2-2v-3"/>
+            </svg>
+        `;
+    }
 });
 

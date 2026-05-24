@@ -62,28 +62,39 @@ body {
 
 /* Simple Timer Row Layout */
 .simple-timer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
     align-items: center;
-    justify-content: center;
-    gap: clamp(0.5rem, 2vw, 1.5rem);
+    column-gap: clamp(0.4rem, 1.5vw, 1rem);
+    /* Distance from the invisible center line */
+    margin-left: clamp(1.5rem, 5vw, 4rem);
+    /* Shift the whole timer slightly further right */
 }
 
+
+
 .simple-timer .unit {
-    font-size: clamp(3.2rem, 14vw, 9.5rem);
+    font-size: clamp(3.8rem, 16vw, 12rem);
+    /* Slightly smaller than 16rem for better balance */
     line-height: 0.9;
+    justify-self: end;
+    /* Align right to the center line */
+    text-align: right;
 }
 
 .simple-label {
     font-family: var(--font-sans);
+    position: static;
+    justify-self: start;
+    /* Align left to the center line */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-size: clamp(1.1rem, 4.8vw, 3.2rem);
-    /* Reduced from 1.6rem - 4.75rem */
+    font-size: clamp(1.2rem, 5.4vw, 4rem);
+    /* Proportional scaling matching the unit */
     font-weight: 500;
-    /* Reduced from 800 */
     color: var(--text-color);
     text-align: left;
     line-height: 1.2;
@@ -91,6 +102,12 @@ body {
     text-transform: lowercase;
     letter-spacing: 0.03em;
     margin: 0;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 1;
+}
+
+.simple-label.fade-out {
+    opacity: 0;
 }
 
 .time-block {
@@ -117,7 +134,7 @@ body {
 .label {
     font-family: var(--font-sans);
     /* Dedicated high-readability font */
-    font-size: clamp(0.75rem, 2.2vw, 1.15rem);
+    font-size: clamp(1rem, 2.8vw, 1.5rem);
     font-weight: 400;
     color: var(--label-color);
     margin-top: 0.85rem;
@@ -164,6 +181,40 @@ body {
 
 .settings-btn:active {
     transform: rotate(45deg) scale(0.95);
+}
+
+/* Fullscreen Toggle Button */
+.fullscreen-btn {
+    position: fixed;
+    bottom: 2rem;
+    left: 5.5rem;
+    /* Placed exactly beside the settings button */
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(9, 9, 11, 0.15);
+    color: var(--label-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    z-index: 100;
+}
+
+.fullscreen-btn:hover {
+    color: var(--text-color);
+    border-color: rgba(9, 9, 11, 0.3);
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.fullscreen-btn:active {
+    transform: scale(0.95);
 }
 
 /* Settings Panel */
@@ -318,6 +369,12 @@ body {
     .settings-btn {
         bottom: 1.25rem;
         left: 1.25rem;
+    }
+
+    .fullscreen-btn {
+        bottom: 1.25rem;
+        left: 4.5rem;
+        /* Adjusted left position on mobile */
     }
 
     .settings-panel {
