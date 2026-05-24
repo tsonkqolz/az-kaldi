@@ -17,11 +17,14 @@ function getSavedTargetDate() {
 
 let targetDate = getSavedTargetDate();
 
-// DOM Elements - Countdown units
+// DOM Elements - Countdown units & timers
+const detailedTimer = document.getElementById('timer');
+const simpleTimer = document.getElementById('simple-timer');
 const daysEl = document.getElementById('days');
 const hoursEl = document.getElementById('hours');
 const minutesEl = document.getElementById('minutes');
 const secondsEl = document.getElementById('seconds');
+const simpleDaysEl = document.getElementById('simple-days');
 
 // DOM Elements - Settings Modal
 const settingsToggle = document.getElementById('settings-toggle');
@@ -41,6 +44,7 @@ function updateCountdown() {
         hoursEl.textContent = '00';
         minutesEl.textContent = '00';
         secondsEl.textContent = '00';
+        simpleDaysEl.textContent = '00';
         return;
     }
 
@@ -58,6 +62,7 @@ function updateCountdown() {
 
     // Efficient DOM writing (updates content only if value shifted)
     if (daysEl.textContent !== dStr) daysEl.textContent = dStr;
+    if (simpleDaysEl.textContent !== dStr) simpleDaysEl.textContent = dStr;
     if (hoursEl.textContent !== hStr) hoursEl.textContent = hStr;
     if (minutesEl.textContent !== mStr) minutesEl.textContent = mStr;
     if (secondsEl.textContent !== sStr) secondsEl.textContent = sStr;
@@ -109,11 +114,6 @@ settingsPanel.addEventListener('click', (e) => {
     e.stopPropagation();
 });
 
-// Click outside the settings panel should close it
-document.addEventListener('click', () => {
-    closeSettings();
-});
-
 // Save new Target Date
 saveSettingsBtn.addEventListener('click', () => {
     const value = targetDatetimeInput.value;
@@ -148,4 +148,34 @@ updateCountdown();
 
 // 1Hz Update Interval
 const timerInterval = setInterval(updateCountdown, 1000);
+
+let swapIntervalId;
+
+function toggleView() {
+    detailedTimer.classList.toggle('hidden');
+    simpleTimer.classList.toggle('hidden');
+}
+
+function startSwapInterval() {
+    if (swapIntervalId) {
+        clearInterval(swapIntervalId);
+    }
+    swapIntervalId = setInterval(toggleView, 10000);
+}
+
+// Start swapping automatically initially
+startSwapInterval();
+
+// Click anywhere on screen to toggle view or close settings
+document.addEventListener('click', () => {
+    if (!settingsPanel.classList.contains('hidden')) {
+        closeSettings();
+        return;
+    }
+    
+    // Perform manual toggle
+    toggleView();
+    // Reset the 10-second automatic timer
+    startSwapInterval();
+});
 

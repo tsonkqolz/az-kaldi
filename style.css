@@ -1,11 +1,15 @@
 /* Ultra-Minimalist Design System - Open Sans Edition */
 
 :root {
-    --bg-color: #fafafa; /* Zinc 50 clean light background */
-    --text-color: #09090b; /* Zinc 950 deep matte black for numbers */
-    --separator-color: #a1a1aa; /* Zinc 400 middle gray for ideal visibility */
-    --label-color: #52525b; /* Zinc 600 balanced gray for labels */
-    
+    --bg-color: #fafafa;
+    /* Zinc 50 clean light background */
+    --text-color: #09090b;
+    /* Zinc 950 deep matte black for numbers */
+    --separator-color: #a1a1aa;
+    /* Zinc 400 middle gray for ideal visibility */
+    --label-color: #52525b;
+    /* Zinc 600 balanced gray for labels */
+
     /* Dedicated Typefaces */
     --font-mono: 'Space Grotesk', -apple-system, sans-serif;
     --font-sans: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -31,17 +35,62 @@ body {
 }
 
 .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    place-items: center;
+    position: relative;
+    width: 100%;
 }
 
 .timer {
+    grid-area: 1 / 1;
     display: flex;
-    align-items: flex-start; /* Keep colons aligned with the top of the numbers */
+    align-items: flex-start;
+    /* Keep colons aligned with the top of the numbers */
     justify-content: center;
     gap: clamp(0.3rem, 2vw, 1.2rem);
     user-select: none;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1;
+    transform: scale(1);
+}
+
+.timer.hidden {
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+}
+
+/* Simple Timer Row Layout */
+.simple-timer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.5rem, 2vw, 1.5rem);
+}
+
+.simple-timer .unit {
+    font-size: clamp(3.2rem, 14vw, 9.5rem);
+    line-height: 0.9;
+}
+
+.simple-label {
+    font-family: var(--font-sans);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: clamp(1.1rem, 4.8vw, 3.2rem);
+    /* Reduced from 1.6rem - 4.75rem */
+    font-weight: 500;
+    /* Reduced from 800 */
+    color: var(--text-color);
+    text-align: left;
+    line-height: 1.2;
+    /* Increased from 0.95 to add space between lines */
+    text-transform: lowercase;
+    letter-spacing: 0.03em;
+    margin: 0;
 }
 
 .time-block {
@@ -52,7 +101,8 @@ body {
 
 .unit {
     font-size: clamp(2.5rem, 11vw, 7.5rem);
-    font-weight: 300; /* Sophisticated light weight */
+    font-weight: 300;
+    /* Sophisticated light weight */
     line-height: 1;
     font-variant-numeric: tabular-nums;
 }
@@ -65,12 +115,14 @@ body {
 }
 
 .label {
-    font-family: var(--font-sans); /* Dedicated high-readability font */
+    font-family: var(--font-sans);
+    /* Dedicated high-readability font */
     font-size: clamp(0.75rem, 2.2vw, 1.15rem);
     font-weight: 400;
     color: var(--label-color);
     margin-top: 0.85rem;
-    text-transform: lowercase; /* Clean European style */
+    text-transform: lowercase;
+    /* Clean European style */
     letter-spacing: 0.03em;
 }
 
@@ -131,9 +183,9 @@ body {
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
     z-index: 99;
     transform-origin: bottom left;
-    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-                visibility 0.3s;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        visibility 0.3s;
     visibility: visible;
     opacity: 1;
 }
@@ -240,7 +292,8 @@ body {
 }
 
 .btn-primary:hover {
-    background-color: #27272a; /* Slightly lighter zinc */
+    background-color: #27272a;
+    /* Slightly lighter zinc */
     transform: translateY(-1px);
 }
 
@@ -266,6 +319,7 @@ body {
         bottom: 1.25rem;
         left: 1.25rem;
     }
+
     .settings-panel {
         bottom: 4.5rem;
         left: 1.25rem;
@@ -273,4 +327,3 @@ body {
         max-width: none;
     }
 }
-
