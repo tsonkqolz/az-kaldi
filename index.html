@@ -17,26 +17,32 @@
 <body>
     <main class="container">
         <!-- Minimalist Countdown Display with Turkish labels -->
-        <div class="timer" id="timer">
-            <div class="time-block">
-                <span class="unit" id="days">00</span>
-                <span class="label">gün</span>
+        <div class="timer-wrapper" id="timer-wrapper">
+            <div class="timer-context-top">Tekamül İmtihan'a</div>
+            
+            <div class="timer" id="timer">
+                <div class="time-block">
+                    <span class="unit" id="days">00</span>
+                    <span class="label">gün</span>
+                </div>
+                <span class="separator">:</span>
+                <div class="time-block">
+                    <span class="unit" id="hours">00</span>
+                    <span class="label">saat</span>
+                </div>
+                <span class="separator">:</span>
+                <div class="time-block">
+                    <span class="unit" id="minutes">00</span>
+                    <span class="label">dakika</span>
+                </div>
+                <span class="separator">:</span>
+                <div class="time-block">
+                    <span class="unit" id="seconds">00</span>
+                    <span class="label">saniye</span>
+                </div>
             </div>
-            <span class="separator">:</span>
-            <div class="time-block">
-                <span class="unit" id="hours">00</span>
-                <span class="label">saat</span>
-            </div>
-            <span class="separator">:</span>
-            <div class="time-block">
-                <span class="unit" id="minutes">00</span>
-                <span class="label">dakika</span>
-            </div>
-            <span class="separator">:</span>
-            <div class="time-block">
-                <span class="unit" id="seconds">00</span>
-                <span class="label">saniye</span>
-            </div>
+            
+            <div class="timer-context-bottom" id="detailed-target-display">kaldı / 28.06.26</div>
         </div>
 
         <!-- Simple Countdown Display -->

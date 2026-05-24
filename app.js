@@ -18,13 +18,22 @@ function getSavedTargetDate() {
 let targetDate = getSavedTargetDate();
 
 // DOM Elements - Countdown units & timers
-const detailedTimer = document.getElementById('timer');
+const detailedTimer = document.getElementById('timer-wrapper');
 const simpleTimer = document.getElementById('simple-timer');
 const daysEl = document.getElementById('days');
 const hoursEl = document.getElementById('hours');
 const minutesEl = document.getElementById('minutes');
 const secondsEl = document.getElementById('seconds');
 const simpleDaysEl = document.getElementById('simple-days');
+const detailedTargetDisplay = document.getElementById('detailed-target-display');
+
+function updateTargetDisplay() {
+    if (!detailedTargetDisplay) return;
+    const day = String(targetDate.getDate()).padStart(2, '0');
+    const month = String(targetDate.getMonth() + 1).padStart(2, '0');
+    const year = String(targetDate.getFullYear()).slice(-2);
+    detailedTargetDisplay.textContent = `kaldı / ${day}.${month}.${year}`;
+}
 
 // DOM Elements - Settings Modal
 const settingsToggle = document.getElementById('settings-toggle');
@@ -131,6 +140,7 @@ saveSettingsBtn.addEventListener('click', () => {
     targetDate = newDate;
     localStorage.setItem(LOCAL_STORAGE_KEY, newDate.toISOString());
     updateCountdown();
+    updateTargetDisplay();
     closeSettings();
 });
 
@@ -140,11 +150,13 @@ resetSettingsBtn.addEventListener('click', () => {
     localStorage.removeItem(LOCAL_STORAGE_KEY);
     initSettingsInput();
     updateCountdown();
+    updateTargetDisplay();
     closeSettings();
 });
 
 // Initial paint
 updateCountdown();
+updateTargetDisplay();
 
 // 1Hz Update Interval
 const timerInterval = setInterval(updateCountdown, 1000);
@@ -152,8 +164,8 @@ const timerInterval = setInterval(updateCountdown, 1000);
 let swapIntervalId;
 
 function toggleView() {
-    detailedTimer.classList.toggle('hidden');
-    simpleTimer.classList.toggle('hidden');
+    if (detailedTimer) detailedTimer.classList.toggle('hidden');
+    if (simpleTimer) simpleTimer.classList.toggle('hidden');
 }
 
 function startSwapInterval() {

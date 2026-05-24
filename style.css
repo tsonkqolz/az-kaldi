@@ -43,36 +43,74 @@ body {
     width: 100%;
 }
 
-.timer {
+/* Core Shared Transition & Placement Styles for Countdown Views */
+.timer-wrapper,
+.simple-timer {
     grid-area: 1 / 1;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1;
+    transform: scale(1);
+    visibility: visible;
+    user-select: none;
+}
+
+.timer-wrapper.hidden,
+.simple-timer.hidden {
+    opacity: 0;
+    transform: scale(0.95);
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.timer-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.8rem, 2.5vw, 1.4rem);
+    /* Balanced gap between contexts and digits */
+}
+
+.timer-context-top {
+    font-family: var(--font-sans);
+    font-size: clamp(1.3rem, 3.5vw, 1.9rem); /* Make it prominently larger */
+    font-weight: 600;
+    color: var(--label-color);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    /* High-end spacing */
+    opacity: 0.7;
+}
+
+.timer-context-bottom {
+    font-family: var(--font-sans);
+    font-size: clamp(0.95rem, 2.4vw, 1.25rem); /* Increased size for readable bottom context */
+    font-weight: 500;
+    color: var(--label-color);
+    text-transform: lowercase;
+    letter-spacing: 0.04em;
+    opacity: 0.75;
+}
+
+.timer {
     display: flex;
     align-items: flex-start;
     /* Keep colons aligned with the top of the numbers */
     justify-content: center;
     gap: clamp(0.3rem, 2vw, 1.2rem);
-    user-select: none;
-    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 1;
-    transform: scale(1);
-}
-
-.timer.hidden {
-    opacity: 0;
-    transform: scale(0.95);
-    pointer-events: none;
 }
 
 /* Simple Timer Row Layout */
 .simple-timer {
-    position: relative;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 35% 65%;
+    /* 35% / 65% Asymmetrical Split - the absolute sweet spot for balance and stability */
     width: 100%;
     align-items: center;
-    column-gap: clamp(0.4rem, 1.5vw, 1rem);
-    /* Distance from the invisible center line */
-    margin-left: clamp(1.5rem, 5vw, 4rem);
-    /* Shift the whole timer slightly further right */
+    column-gap: clamp(0.5rem, 2.5vw, 1.5rem);
+    /* Generous gap for an elegant, spacious split */
+    margin-left: 0;
+    /* Pure grid alignment */
 }
 
 
@@ -139,7 +177,7 @@ body {
     font-size: clamp(1rem, 2.8vw, 1.5rem);
     font-weight: 400;
     color: var(--label-color);
-    margin-top: 0.85rem;
+    margin-top: 0.15rem;
     text-transform: lowercase;
     /* Clean European style */
     letter-spacing: 0.03em;
@@ -385,6 +423,17 @@ body {
         width: calc(100vw - 2.5rem);
         max-width: none;
     }
+
+    /* Prevent simple-timer overflow on narrow mobile screens */
+    .simple-timer {
+        margin-left: 0;
+        /* Remove rightward shift on mobile to keep it perfectly centered */
+        width: auto;
+        column-gap: 0.5rem;
+        /* Tighter column gap for phone screens */
+        grid-template-columns: 1.12fr 0.88fr;
+        /* 56% / 44% optical center split for portrait mobile screens */
+    }
 }
 
 /* Premium Dotted Wave Background (Immersive & Spaced) */
@@ -394,15 +443,18 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    height: 100dvh; /* Fill the entire screen vertically */
+    height: 100dvh;
+    /* Fill the entire screen vertically */
     z-index: -1;
     pointer-events: none;
     overflow: hidden;
-    opacity: 0.12; /* Subtle, expansive look across the whole screen without clutter */
+    opacity: 0.12;
+    /* Subtle, expansive look across the whole screen without clutter */
 }
 
 .background-waves svg {
-    width: 200%; /* Extra wide for smooth horizontal scroll */
+    width: 200%;
+    /* Extra wide for smooth horizontal scroll */
     height: 100%;
 }
 
@@ -412,20 +464,23 @@ body {
 }
 
 .wave-1 {
-    stroke: #10b981; /* Emerald Green */
+    stroke: #10b981;
+    /* Emerald Green */
     stroke-dasharray: 6 12;
     animation: waveFlowLeft 22s linear infinite;
 }
 
 .wave-2 {
-    stroke: #059669; /* Medium Emerald */
+    stroke: #059669;
+    /* Medium Emerald */
     stroke-dasharray: 4 10;
     animation: waveFlowRight 28s linear infinite;
     opacity: 0.8;
 }
 
 .wave-3 {
-    stroke: #047857; /* Deep Emerald */
+    stroke: #047857;
+    /* Deep Emerald */
     stroke-dasharray: 5 12;
     animation: waveFlowLeft 35s linear infinite;
     opacity: 0.6;
@@ -435,8 +490,10 @@ body {
     0% {
         transform: translate3d(0, 0, 0);
     }
+
     100% {
-        transform: translate3d(-50%, 0, 0); /* Seamless loop left */
+        transform: translate3d(-50%, 0, 0);
+        /* Seamless loop left */
     }
 }
 
@@ -444,7 +501,9 @@ body {
     0% {
         transform: translate3d(-50%, 0, 0);
     }
+
     100% {
-        transform: translate3d(0, 0, 0); /* Seamless loop right */
+        transform: translate3d(0, 0, 0);
+        /* Seamless loop right */
     }
 }
