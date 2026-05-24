@@ -26,6 +26,7 @@ body {
     color: var(--text-color);
     font-family: var(--font-mono);
     min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height to prevent vertical shifting on mobile Chrome/Safari */
     display: flex;
     align-items: center;
     justify-content: center;
