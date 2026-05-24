@@ -26,7 +26,8 @@ body {
     color: var(--text-color);
     font-family: var(--font-mono);
     min-height: 100vh;
-    min-height: 100dvh; /* Dynamic viewport height to prevent vertical shifting on mobile Chrome/Safari */
+    min-height: 100dvh;
+    /* Dynamic viewport height to prevent vertical shifting on mobile Chrome/Safari */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -383,5 +384,67 @@ body {
         left: 1.25rem;
         width: calc(100vw - 2.5rem);
         max-width: none;
+    }
+}
+
+/* Premium Dotted Wave Background (Immersive & Spaced) */
+.background-waves {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh; /* Fill the entire screen vertically */
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0.12; /* Subtle, expansive look across the whole screen without clutter */
+}
+
+.background-waves svg {
+    width: 200%; /* Extra wide for smooth horizontal scroll */
+    height: 100%;
+}
+
+.wave-path {
+    stroke-width: 2.5px;
+    stroke-linecap: round;
+}
+
+.wave-1 {
+    stroke: #10b981; /* Emerald Green */
+    stroke-dasharray: 6 12;
+    animation: waveFlowLeft 22s linear infinite;
+}
+
+.wave-2 {
+    stroke: #059669; /* Medium Emerald */
+    stroke-dasharray: 4 10;
+    animation: waveFlowRight 28s linear infinite;
+    opacity: 0.8;
+}
+
+.wave-3 {
+    stroke: #047857; /* Deep Emerald */
+    stroke-dasharray: 5 12;
+    animation: waveFlowLeft 35s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes waveFlowLeft {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-50%, 0, 0); /* Seamless loop left */
+    }
+}
+
+@keyframes waveFlowRight {
+    0% {
+        transform: translate3d(-50%, 0, 0);
+    }
+    100% {
+        transform: translate3d(0, 0, 0); /* Seamless loop right */
     }
 }
