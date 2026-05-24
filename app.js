@@ -54,6 +54,11 @@ function updateCountdown() {
     const now = new Date();
     const totalDifference = targetDate - now;
 
+    const day = String(targetDate.getDate()).padStart(2, '0');
+    const month = String(targetDate.getMonth() + 1).padStart(2, '0');
+    const year = String(targetDate.getFullYear()).slice(-2);
+    const dateStr = `${day}.${month}.${year}`;
+
     if (totalDifference <= 0) {
         // Target reached: freeze at 00:00:00:00
         daysEl.textContent = '00';
@@ -61,6 +66,11 @@ function updateCountdown() {
         minutesEl.textContent = '00';
         secondsEl.textContent = '00';
         simpleDaysEl.textContent = '00';
+        
+        const newTitle = `0 gün imtihana | ${dateStr}`;
+        if (document.title !== newTitle) {
+            document.title = newTitle;
+        }
         return;
     }
 
@@ -82,6 +92,12 @@ function updateCountdown() {
     if (hoursEl.textContent !== hStr) hoursEl.textContent = hStr;
     if (minutesEl.textContent !== mStr) minutesEl.textContent = mStr;
     if (secondsEl.textContent !== sStr) secondsEl.textContent = sStr;
+
+    // Update dynamic tab title
+    const newTitle = `${days} gün imtihana | ${dateStr}`;
+    if (document.title !== newTitle) {
+        document.title = newTitle;
+    }
 }
 
 // Format local Date object to YYYY-MM-DDTHH:mm format
