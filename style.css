@@ -71,20 +71,9 @@ body {
     /* Balanced gap between contexts and digits */
 }
 
-.timer-context-top {
-    font-family: var(--font-sans);
-    font-size: clamp(1.3rem, 3.5vw, 1.9rem); /* Make it prominently larger */
-    font-weight: 600;
-    color: var(--label-color);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    /* High-end spacing */
-    opacity: 0.7;
-}
-
 .timer-context-bottom {
     font-family: var(--font-sans);
-    font-size: clamp(0.95rem, 2.4vw, 1.25rem); /* Increased size for readable bottom context */
+    font-size: clamp(1.05rem, 2.6vw, 1.4rem); /* Slightly larger for desktop/landscape viewports */
     font-weight: 500;
     color: var(--label-color);
     text-transform: lowercase;
@@ -102,37 +91,50 @@ body {
 
 /* Simple Timer Row Layout */
 .simple-timer {
-    display: grid;
-    grid-template-columns: 35% 65%;
-    /* 35% / 65% Asymmetrical Split - the absolute sweet spot for balance and stability */
-    width: 100%;
+    display: flex;
     align-items: center;
-    column-gap: clamp(0.5rem, 2.5vw, 1.5rem);
-    /* Generous gap for an elegant, spacious split */
-    margin-left: 0;
-    /* Pure grid alignment */
+    justify-content: center;
+    /* Center the entire unified layout on the viewport */
+    column-gap: clamp(0.8rem, 2.5vw, 1.8rem);
+    width: 100%;
 }
 
+.simple-context {
+    white-space: nowrap;
+    font-family: var(--font-sans);
+    font-size: clamp(1.05rem, 2.6vw, 1.4rem); /* Slightly larger for desktop/landscape viewports */
+    font-weight: 500;
+    color: var(--label-color);
+    text-transform: lowercase;
+    letter-spacing: 0.04em;
+    opacity: 0.75;
+    text-align: left;
+}
 
+.simple-divider {
+    width: 1px;
+    height: clamp(1.75rem, 4.3vw, 3.2rem); /* Slightly taller for desktop/landscape viewports */
+    background-color: var(--separator-color);
+    opacity: 0.35;
+    border-radius: 1px;
+    flex-shrink: 0;
+}
 
 .simple-timer .unit {
-    font-size: clamp(3.8rem, 16vw, 12rem);
-    /* Slightly smaller than 16rem for better balance */
+    font-size: clamp(3rem, 13vw, 9rem);
+    /* Scaled down slightly for a sleek, compact visual presence */
     line-height: 0.9;
-    justify-self: end;
-    /* Align right to the center line */
     text-align: right;
+    font-variant-numeric: tabular-nums;
+    /* Stable, fixed-width numbers to prevent wiggling */
 }
 
 .simple-label {
     font-family: var(--font-sans);
-    position: static;
-    justify-self: start;
-    /* Align left to the center line */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-size: clamp(1.2rem, 5.4vw, 4rem);
+    font-size: clamp(1rem, 4.4vw, 3rem);
     /* Proportional scaling matching the unit */
     font-weight: 500;
     color: var(--text-color);
@@ -144,6 +146,10 @@ body {
     margin: 0;
     transition: opacity 0.3s ease-in-out;
     opacity: 1;
+
+    /* Fixed stable width to accommodate all language widths without layout shifting */
+    width: clamp(7.5rem, 22vw, 14rem);
+    flex-shrink: 0;
 }
 
 .simple-label.fade-out {
@@ -426,13 +432,54 @@ body {
 
     /* Prevent simple-timer overflow on narrow mobile screens */
     .simple-timer {
-        margin-left: 0;
-        /* Remove rightward shift on mobile to keep it perfectly centered */
+        display: grid;
+        /* Overrides desktop flexbox with mobile optimized grid */
+        justify-content: start;
+        /* Align grid content to the left of the grid container */
         width: auto;
-        column-gap: 0.5rem;
-        /* Tighter column gap for phone screens */
-        grid-template-columns: 1.12fr 0.88fr;
-        /* 56% / 44% optical center split for portrait mobile screens */
+        margin-left: -3rem;
+        /* Pushes the entire block to sit elegantly on the left side */
+        column-gap: 0.8rem;
+        row-gap: 0.6rem;
+        grid-template-columns: auto 1fr;
+        /* Shrink columns to wrap tightly around digits and label */
+    }
+
+    .simple-timer .unit {
+        grid-column: 1;
+        justify-self: start;
+        /* Aligns to left edge of the grid */
+        text-align: left;
+        font-size: clamp(3.8rem, 16vw, 6rem); /* Re-scale digits slightly down */
+    }
+
+    .simple-timer .simple-label {
+        grid-column: 2;
+        justify-self: start;
+        width: auto;
+        /* Reset fixed width on mobile for natural grid flow */
+        font-size: clamp(1.2rem, 5.2vw, 1.9rem); /* Re-scale rotating labels slightly down */
+    }
+
+    .simple-timer .simple-divider {
+        display: none;
+        /* Hide the divider when context wraps below on mobile */
+    }
+
+    .simple-timer .simple-context {
+        position: static;
+        transform: none;
+        grid-column: 1 / span 2;
+        /* Stretch context across columns starting from column 1 */
+        justify-self: start;
+        /* Perfectly aligns context left edge to match the left edge of days digit! */
+        text-align: left;
+        font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+        /* Scale nicely down on small phones */
+    }
+
+    .timer-context-bottom {
+        font-size: clamp(0.85rem, 3.5vw, 1.1rem); /* Scale down detailed context on mobile devices */
     }
 }
 

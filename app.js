@@ -26,13 +26,20 @@ const minutesEl = document.getElementById('minutes');
 const secondsEl = document.getElementById('seconds');
 const simpleDaysEl = document.getElementById('simple-days');
 const detailedTargetDisplay = document.getElementById('detailed-target-display');
+const simpleTargetDisplay = document.getElementById('simple-context');
 
 function updateTargetDisplay() {
-    if (!detailedTargetDisplay) return;
     const day = String(targetDate.getDate()).padStart(2, '0');
     const month = String(targetDate.getMonth() + 1).padStart(2, '0');
     const year = String(targetDate.getFullYear()).slice(-2);
-    detailedTargetDisplay.textContent = `kaldı / ${day}.${month}.${year}`;
+    const text = `tekamül imtihana / ${day}.${month}.${year}`;
+    
+    if (detailedTargetDisplay) {
+        detailedTargetDisplay.textContent = text;
+    }
+    if (simpleTargetDisplay) {
+        simpleTargetDisplay.textContent = text;
+    }
 }
 
 // DOM Elements - Settings Modal
@@ -231,7 +238,7 @@ const fullscreenToggle = document.getElementById('fullscreen-toggle');
 
 function toggleFullscreen(e) {
     if (e) e.stopPropagation(); // Prevents document click toggleView from triggering
-    
+
     if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen().catch((err) => {
             console.error(`Error attempting to enable fullscreen: ${err.message}`);
